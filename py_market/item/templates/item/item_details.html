@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+
+
+{% block content %}
+<div class="grid grid-cols-4 gap-6">
+    <div class="col-span-2 ">
+        <img src="{{item.image.url}}" alt="{{item.name}} photo" class="rounded-xl ">
+
+    </div>
+
+    <div class="bg-gray-100 p-6 col-span-2 rounded-xl">
+        <h1 class="mb-6 text-3xl">{{item.name}}</h1>
+        <p class="text-gray-500"><strong>Price: </strong>{{item.price}}</p>
+        <p class="text-gray-500"><strong>Seller: </strong>{{item.created_by}}</p>
+
+        <p class="text-gray-700"><strong class="text-gray-700">Description: </strong>{{item.description}}</p>
+
+        <a href="#"
+            class="inline-block mt-6 py-6 px-6 text-lg bg-teal-500 text-white rounded-xl font-semibold hover:bg-teal-700 ">Contact
+            Seller</a>
+    </div>
+
+
+</div>
+
+
+<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+
+    <h2 class="mb-12 text-2xl text-center">Related Items</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+        {% for item in related_items %}
+
+        <div>
+            <a href="{% url 'item:details' item.id %}">
+                <div>
+                    <img src="{{item.image.url}}" class="rounded-t-xl">
+                </div>
+
+
+                <div class="p-6 bg-white rounded-b-xl">
+                    <h2 class="font-semibold text-x">{{item.name}}</h2>
+                    <h3>{{item.price}}</h3>
+                    <p>{{item.description}}</p>
+                </div>
+            </a>
+
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
