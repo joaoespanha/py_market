@@ -7,3 +7,4 @@ protobuf==4.21.12
 python-dotenv==1.0.0
 sqlparse==0.4.4
 typing_extensions==4.7.1
+Pillow

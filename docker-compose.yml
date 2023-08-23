@@ -1,5 +1,5 @@
 services:
-  mysql:
+  db:
     image: mysql:latest
     environment:
       - MYSQL_PASSWORD=12345
@@ -9,6 +9,27 @@ services:
       - mysql-data:/var/lib/mysql
     ports:
       - 3306:3306
+    networks:
+      - backend
+
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    environment:
+      - MYSQL_PASSWORD=12345
+      - MYSQL_DATABASE=pymarket_db
+      - MYSQL_ROOT_PASSWORD=12345
+    depends_on:
+      - db
+    networks:
+      - backend
 
 volumes:
   mysql-data:
+  web:
+
+networks:
+  backend:
