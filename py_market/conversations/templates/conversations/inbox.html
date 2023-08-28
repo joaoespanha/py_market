@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% block title %}Py Market | Inbox{% endblock %}
+
+{% block content %}
+<h1 class='text-center font-semibold text-2xl'>INBOX</h1>
+
+
+<div class='space-y-6'>
+    {% for conversation in conversations  %}
+    <a  href="#">
+
+        <div class='p-6 flex bg-gra-100 rounded-xl hover:scale-[1.02]'>
+            <div class='pr-6'>
+                <img src="{{conversation.item.image.url}}" class='w-20 rounded-xl' alt="item image">
+            </div>
+
+            <div class='bg-gray-100 rounded-xl w-full px-4'>
+                
+                {% for member in conversation.members.all  %}
+                {% if member != request.user %}
+                <p class='my-6'>Chat with: <strong>{{member.username}}</strong> | Last message: {{conversation.modified_at}}</p>
+                
+                {% endif %}                
+                {% endfor %}
+                <p><strong>{{conversation.item.name}}</strong></p>
+            </div>
+
+
+        </div>
+    </a>
+
+
+</div>
+
+
+
+{% endfor %}
+
+{% endblock  %}
