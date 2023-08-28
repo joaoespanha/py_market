@@ -7,7 +7,7 @@
 
 <div class='space-y-6'>
     {% for conversation in conversations  %}
-    <a  href="#">
+    <a  href="{% url 'conversation:details' conversation.id %}">
 
         <div class='p-6 flex bg-gra-100 rounded-xl hover:scale-[1.02]'>
             <div class='pr-6'>

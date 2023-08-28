@@ -7,4 +7,5 @@ app_name = "conversation"
 urlpatterns = [
     path("new/<int:item_id>/", views.new_conversation, name="new"),
     path("inbox", views.inbox, name="inbox"),
+    path("details/<int:conversation_id>/", views.details, name="details"),
 ]

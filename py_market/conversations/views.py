@@ -18,7 +18,9 @@ def new_conversation(request, item_id):
     )
 
     if conversations:
-        ...  # redirect to conversation
+        return redirect(
+            "conversation:details", conversation_id=conversations.first().id
+        )  # redirect to conversation
 
     if request.method == "POST":
         form = ConversationMessageForm(request.POST)
@@ -40,6 +42,31 @@ def new_conversation(request, item_id):
     return render(request, "conversations/new.html", {"form": form})
 
 
+@login_required
 def inbox(request):
     conversations = Conversation.objects.filter(members__in=[request.user.id])
     return render(request, "conversations/inbox.html", {"conversations": conversations})
+
+
+@login_required
+def details(request, conversation_id):
+    conversation = get_object_or_404(Conversation, pk=conversation_id)
+    if request.method == "POST":
+        form = ConversationMessageForm(request.POST)
+
+        if form.is_valid:
+            message = form.save(commit=False)
+            message.conversation = conversation
+            message.created_by = request.user
+            message.save()
+
+            conversation.save()
+            return redirect("conversation:details", conversation_id=conversation_id)
+    else:
+        form = ConversationMessageForm()
+
+    return render(
+        request,
+        "conversations/details.html",
+        {"conversation": conversation, "form": form},
+    )

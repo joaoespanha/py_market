@@ -1,0 +1,57 @@
+{% extends 'core/base.html' %}
+{% block title %}Py Market | Inbox{% endblock %}
+
+{% block content %}
+<h1 class='text-center font-semibold text-2xl'>INBOX</h1>
+
+
+<div class=''>
+    {% for message in conversation.messages.all  %}
+
+        <div class='p-6 flex rounded-xl hover:scale-[1.02]'>
+
+            <div class='{% if message.created_by == request.user %}bg-teal-100{% else %}bg-gray-100{% endif %}  rounded-xl w-full px-4'>
+
+                <p class='my-6'>@<strong>{{message.created_by}}</strong> | {{message.created_at}}</p>
+                
+                <p class='p-4'><strong>{{message.content}}</strong></p>
+            </div>
+
+
+        </div>
+    </a>
+
+
+</div>
+
+{% endfor %}
+
+<form method='POST' class='ml-6 p-6 w-full' action=".">
+        {% csrf_token %}
+        <div class='mb-4'>
+            <label class='font-semibold inline-block mb-2' >
+                {{form.content}}
+            </label>
+        </div>
+    
+        {%if form.errors or form.non_field_errors%}
+    
+        <div class='mb-6'>
+            <ul class='font-red-500'>
+                {% for field in form %}
+                {{field.errors}}
+                
+                {% endfor %}
+            </ul>
+        {% endif %}
+    
+        <button class='py-4 px-8 fonte-lg bg-teal-500 rounded-xl text-white font-semibold hover:bg-teal-700 '>Send</button>
+    
+</form>
+    
+
+
+
+
+
+{% endblock  %}
